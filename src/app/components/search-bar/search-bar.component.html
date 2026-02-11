@@ -1,0 +1,14 @@
+<div style="padding: 20px; font-family: sans-serif">
+  <h2>Phase 1: Search Bar Component</h2>
+  <p>This component allows users to search for items in the application.</p>
+
+  <input
+    [formControl]="searchControl"
+    placeholder="Search here..."
+    style="width: 100%; padding: 10px; font-size: 16px"
+  />
+
+  <ul *ngIf="results.length > 0">
+    <li *ngFor="let result of results" style="margin-top: 10px">{{ result }}</li>
+  </ul>
+</div>

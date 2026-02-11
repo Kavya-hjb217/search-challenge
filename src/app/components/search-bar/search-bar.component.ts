@@ -8,7 +8,7 @@ import { SearchService } from '../../services/search.service';
   standalone: true, //indicates that this component is self-contained and does not require a module
   imports: [CommonModule, ReactiveFormsModule], //modules that this component depends on
   templateUrl: './search-bar.component.html', //path to html template
-  styleUrls: ['./search-bar.component.css'], //path to css styles
+//   styleUrls: ['./search-bar.component.css'], //path to css styles
 })
 export class SearchBarComponent implements OnInit {
   //implements OnInit to use ngOnInit lifecycle hook
@@ -18,6 +18,8 @@ export class SearchBarComponent implements OnInit {
   constructor(private searchService: SearchService) {} //injecting SearchService to use its methods(dependency injection)
 
 
+
+  //nested subscription will cause lag in UI
   ngOnInit(): void {//runs after component initialization
     this.searchControl.valueChanges.subscribe((term) => {//runs for each change (every keystroke)
       //subscribing to value changes in the input field

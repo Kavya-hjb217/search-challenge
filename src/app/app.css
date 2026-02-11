@@ -1,0 +1,67 @@
+/* Container for the entire application */
+:host {
+  display: block;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling */
+h2 {
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Subtext/Instructions */
+p {
+  color: #666;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Styling the input field we linked via [formControl] */
+input {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+  transition: border-color 0.3s ease;
+  outline: none;
+}
+
+input:focus {
+  border-color: #007bff; /* Highlights blue when typing */
+}
+
+/* Results list styling */
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+/* Individual result items */
+li {
+  background: white;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+  color: #444;
+  transition: background 0.2s ease;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+li:hover {
+  background-color: #f0f7ff;
+  cursor: pointer;
+}

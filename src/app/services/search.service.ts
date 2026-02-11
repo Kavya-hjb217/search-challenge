@@ -18,9 +18,10 @@ export class SearchService {
             `${term} result 2`,
             `${term} result 3`
         ];
-        return of(mockData).pipe(delay(500)); // Simulate a delay of 500ms before emitting the results
+        return of(mockData).pipe(delay(50)); // Simulate a delay of 500ms before emitting the results
         //of makes thearray an observable for async handdling 
         //pipe() is an RxJS funtion used to combine multiple operators (its not same as angular pipe)
+        //this delay  and manual data updation causes a lag 
     
     
     }   

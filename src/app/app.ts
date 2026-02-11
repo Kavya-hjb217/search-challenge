@@ -1,12 +1,13 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
 
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
+  standalone: true,
+  imports: [ SearchBarComponent],
+  template:`<app-search-bar></app-search-bar>`,
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('search-challenge');
+  
 }
