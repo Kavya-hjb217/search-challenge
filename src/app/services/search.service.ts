@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";//decorator to make this class injectable 
-import { Observable,of } from "rxjs";//RxJS class representing a stream of data, and a function to create an observable from a static value
+import { Observable,of, throwError } from "rxjs";//RxJS class representing a stream of data, and a function to create an observable from a static value
 import { delay } from "rxjs/operators";//pauses the observable stream for a specified duration
 
 @Injectable({
@@ -18,6 +18,11 @@ export class SearchService {
             `${term} result 2`,
             `${term} result 3`
         ];
+
+        // return throwError(() => new Error('Simulated network error')).pipe(delay(500)); // Simulate a network error with a delay of 500ms
+
+
+
         return of(mockData).pipe(delay(500)); // Simulate a delay of 500ms before emitting the results
         //of makes thearray an observable for async handdling 
         //pipe() is an RxJS funtion used to combine multiple operators (its not same as angular pipe)

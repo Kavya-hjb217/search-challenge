@@ -4,8 +4,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms'; //tracks valu
 import { SearchService } from '../../services/search.service';
 
 //RxJS imports for handling asynchronous data streams(fix the lag)
-import { Observable, of } from 'rxjs';
-import { switchMap, debounceTime, catchError, distinctUntilChanged } from 'rxjs/operators';
+import { Observable, of,BehaviorSubject } from 'rxjs';
+import { switchMap, debounceTime, catchError, distinctUntilChanged,tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-bar', //custom html tag to use this component
@@ -21,6 +21,10 @@ export class SearchBarComponent implements OnInit {
 
   results$!: Observable<string[]>; //observable to hold search results (fix the lag)
 
+
+  isLoading$ = new BehaviorSubject<boolean>(false); //BehaviorSubject to track loading state
+  errorMessage$ = new BehaviorSubject<string|null >(null); //BehaviorSubject to track error messages
+
   constructor(private searchService: SearchService) {} //injecting SearchService to use its methods(dependency injection)
 
   //nested subscription will cause lag in UI
@@ -29,18 +33,28 @@ export class SearchBarComponent implements OnInit {
     this.results$ = this.searchControl.valueChanges.pipe(
       //listens to changes in the input field
       debounceTime(300), //waits for 300ms of inactivity before emitting the latest value (prevents excessive calls to search service)
-      distinctUntilChanged(), //only emits when the current value is different from the last value (prevents duplicate searches)
-      switchMap((term) => {
-        if (term && term.trim()) //remove whitespaces(from both ends) and check if term is not empty
-        {
-          return this.searchService.getResults(term);
-        } else {
-          return of([]); //return empty array if term is empty or whitespace
-        }
-      }),
-      catchError((err) => {
-        console.error('Search error:', err);
-        return of([]); //return empty array on error to keep the UI responsive
+      distinctUntilChanged(),//only emits when the current value is different from the last value (prevents duplicate searches)
+      
+      
+      tap(()=>{this.isLoading$.next(true); this.errorMessage$.next(null);}),
+
+
+      
+      switchMap(term => {
+       if(!term || !term.trim()) {
+        this.isLoading$.next(false);
+        return of([]); //if the search term is empty or only whitespace, return an empty array
+       }
+       return this.searchService.getResults(term).pipe(
+        tap(() => this.isLoading$.next(false)), //set loading to false when results are received
+        catchError(err => {
+         this.errorMessage$.next('An error occurred while fetching results. Please try again.'); //set error message if an error occurs
+            this.isLoading$.next(false); //set loading to false if an error occurs
+            return of([]); //return an empty array if an error occurs
+
+
+        })
+       );
       }),
     );
   }
@@ -48,5 +62,11 @@ export class SearchBarComponent implements OnInit {
 
   clearSearch(): void {
     this.searchControl.setValue(''); //clears the input field by setting its value to an empty string
+    this.isLoading$.next(false); //set loading to false when clearing search
+    this.errorMessage$.next(null); //clear any error messages when clearing search
+    //this will trigger the valueChanges observable and clear the results as well
+    
+    
+    
   }
 }
