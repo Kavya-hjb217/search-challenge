@@ -1,16 +1,25 @@
 <div class="search-container">
-    <h2>Phase 2: Reactive Search Bar</h2>
-    <input [formControl]="searchControl" placeholder="Type to search..." class="search-input" />
+  <h2>Reactive Search</h2>
 
-
-    <ul *ngIf="(results$|async) as searchResults">
-        <li *ngFor="let result of searchResults" class="result-item">{{ result }}</li>
-
-        <li *ngIf="searchResults.length === 0 && searchControl.value && searchControl.value.trim() !== ''" class="no-results">No results found</li>
-
-
-
-    </ul>
-
+  <div class="search-box">
+    <input [formControl]="searchControl" placeholder="Search for something...">
     
+    <button 
+      *ngIf="searchControl.value" 
+      class="clear-btn" 
+      (click)="clearSearch()">
+      &times;
+    </button>
+  </div>
+
+  <p class="feedback" *ngIf="searchControl.value">
+    Showing results for: <strong>"{{ searchControl.value }}"</strong>
+  </p>
+
+  <ul *ngIf="(results$ | async) as searchResults">
+    <li *ngFor="let item of searchResults">{{ item }}</li>
+    <li class="no-results" *ngIf="searchResults.length === 0 && searchControl.value">
+      No matches found.
+    </li>
+  </ul>
 </div>

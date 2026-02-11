@@ -1,0 +1,36 @@
+/* Container for input and clear button */
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Move the clear button inside the input on the right */
+.clear-btn {
+  position: absolute;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.clear-btn:hover {
+  color: #333;
+}
+
+/* Feedback text styling */
+.feedback {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #666;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
