@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'; //decorator for angular component and lifecycle hook interface
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'; //decorator for angular component and lifecycle hook interface
 import { CommonModule } from '@angular/common'; //provides common directives like ngIf and ngFor
 import { FormControl, ReactiveFormsModule } from '@angular/forms'; //tracks value and validation status of individual input (listensn to changeds in input )
 import { SearchService } from '../../services/search.service';
@@ -13,10 +13,12 @@ import { switchMap, debounceTime, catchError, distinctUntilChanged,tap } from 'r
   imports: [CommonModule, ReactiveFormsModule], //modules that this component depends on
   templateUrl: './search-bar.component.html', //path to html template
   styleUrls: ['./search-bar.component.css'], //path to css styles
+
+  changeDetection:ChangeDetectionStrategy.OnPush //optimizes performance by only checking for changes when input properties change or events occur (fix the lag)
 })
 export class SearchBarComponent implements OnInit {
   //implements OnInit to use ngOnInit lifecycle hook
-  searchControl: FormControl = new FormControl(''); //form control to track input value and status
+  searchControl: FormControl = new FormControl('',{nonNullable: true}); //form control to track input value and status
   //   results: string[] = []; //array to hold search results
 
   results$!: Observable<string[]>; //observable to hold search results (fix the lag)
