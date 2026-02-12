@@ -14,7 +14,7 @@ import { switchMap, debounceTime, catchError, distinctUntilChanged,tap } from 'r
   templateUrl: './search-bar.component.html', //path to html template
   styleUrls: ['./search-bar.component.css'], //path to css styles
 
-  changeDetection:ChangeDetectionStrategy.OnPush //optimizes performance by only checking for changes when input properties change or events occur (fix the lag)
+  changeDetection:ChangeDetectionStrategy.OnPush 
 })
 export class SearchBarComponent implements OnInit {
   //implements OnInit to use ngOnInit lifecycle hook
